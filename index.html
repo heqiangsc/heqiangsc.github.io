@@ -121,6 +121,14 @@
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
   </nav>
 </div>
 
@@ -157,7 +165,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/25/article-title/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/26/CentOS7%E4%BD%BF%E7%94%A8firewalld%E6%89%93%E5%BC%80%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99%E4%B8%8E%E7%AB%AF%E5%8F%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -170,7 +178,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/25/article-title/" class="post-title-link" itemprop="url">article title</a>
+          <a href="/2021/08/26/CentOS7%E4%BD%BF%E7%94%A8firewalld%E6%89%93%E5%BC%80%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99%E4%B8%8E%E7%AB%AF%E5%8F%A3/" class="post-title-link" itemprop="url">CentOS7使用firewalld打开关闭防火墙与端口</a>
         </h2>
 
         <div class="post-meta-container">
@@ -180,8 +188,18 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-08-25 17:00:19" itemprop="dateCreated datePublished" datetime="2021-08-25T17:00:19+08:00">2021-08-25</time>
+      <time title="Created: 2021-08-26 16:24:04 / Modified: 16:43:02" itemprop="dateCreated datePublished" datetime="2021-08-26T16:24:04+08:00">2021-08-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
     </span>
 
   
@@ -194,7 +212,43 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <h4 id="firewalld的基本使用"><a href="#firewalld的基本使用" class="headerlink" title="firewalld的基本使用"></a>firewalld的基本使用</h4><ul>
+<li>启动： systemctl start firewalld</li>
+<li>关闭： systemctl stop firewalld</li>
+<li>查看状态： systemctl status firewalld </li>
+<li>开机禁用 ： systemctl disable firewalld</li>
+<li>开机启用 ： systemctl enable firewalld</li>
+</ul>
+<h4 id="systemctl是CentOS7的服务管理工具中主要的工具，它融合之前service和chkconfig的功能于一体。"><a href="#systemctl是CentOS7的服务管理工具中主要的工具，它融合之前service和chkconfig的功能于一体。" class="headerlink" title="systemctl是CentOS7的服务管理工具中主要的工具，它融合之前service和chkconfig的功能于一体。"></a>systemctl是CentOS7的服务管理工具中主要的工具，它融合之前service和chkconfig的功能于一体。</h4><ul>
+<li>启动一个服务：systemctl start firewalld.service</li>
+<li>关闭一个服务：systemctl stop firewalld.service</li>
+<li>重启一个服务：systemctl restart firewalld.service</li>
+<li>显示一个服务的状态：systemctl status firewalld.service</li>
+<li>在开机时启用一个服务：systemctl enable firewalld.service</li>
+<li>在开机时禁用一个服务：systemctl disable firewalld.service</li>
+<li>查看服务是否开机启动：systemctl is-enabled firewalld.service</li>
+<li>查看已启动的服务列表：systemctl list-unit-files|grep enabled</li>
+<li>查看启动失败的服务列表：systemctl –failed</li>
+</ul>
+<h4 id="配置firewalld-cmd"><a href="#配置firewalld-cmd" class="headerlink" title="配置firewalld-cmd"></a>配置firewalld-cmd</h4><ul>
+<li>查看版本： firewall-cmd –version</li>
+<li>查看帮助： firewall-cmd –help</li>
+<li>显示状态： firewall-cmd –state</li>
+<li>查看所有打开的端口： firewall-cmd –zone=public –list-ports</li>
+<li>更新防火墙规则： firewall-cmd –reload</li>
+<li>查看区域信息:  firewall-cmd –get-active-zones</li>
+<li>查看指定接口所属区域： firewall-cmd –get-zone-of-interface=eth0</li>
+<li>拒绝所有包：firewall-cmd –panic-on</li>
+<li>取消拒绝状态： firewall-cmd –panic-off</li>
+<li>查看是否拒绝： firewall-cmd –query-panic</li>
+</ul>
+<h4 id="那怎么开启一个端口呢"><a href="#那怎么开启一个端口呢" class="headerlink" title="那怎么开启一个端口呢"></a>那怎么开启一个端口呢</h4><ul>
+<li>添加<br>firewall-cmd –zone=public –add-port=80/tcp –permanent   （–permanent永久生效，没有此参数重启后失效）</li>
+<li>重新载入<br>firewall-cmd –reload</li>
+<li>查看<br>firewall-cmd –zone= public –query-port=80/tcp</li>
+<li>删除<br>firewall-cmd –zone= public –remove-port=80/tcp –permanent</li>
+</ul>
+
       
     </div>
 
